@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Формула вирусных разговорных роликов — maysoulme</title>
+<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Inter:wght@400;500;600;700;800&family=DM+Sans:ital@1&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+:root { --accent: #710C04; --split: 60%; }
+
+@page {
+  size: 1920px 1080px;
+  margin: 0;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  background: #ffffff;
+  color: #1a1a1a;
+  font-size: 17px;
+  line-height: 1.75;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Slide */
+.slide {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  page-break-after: always;
+  position: relative;
+}
+
+/* Vertical divider — real element, not pseudo */
+.divider {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: var(--split);
+  width: 1px;
+  background: #e8e8e8;
+}
+
+/* Nav — only left 60% */
+.nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 48px;
+  border-bottom: 1px solid #f0f0f0;
+  background: #fff;
+  z-index: 10;
+  flex-shrink: 0;
+  width: var(--split);
+}
+.nav__logo { text-decoration: none; display: flex; align-items: center; }
+.nav__logo img { height: 30px; width: auto; }
+.nav__logo-name {
+  font-family: 'Inter', sans-serif;
+  font-size: 14px; font-weight: 400; font-style: italic;
+  color: #888; letter-spacing: 0.5px;
+  margin-right: 8px;
+}
+
+/* Content — left 60%, vertically centered */
+.slide__body {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  width: var(--split);
+  padding: 0 48px;
+}
+
+.slide__inner {
+  width: 100%;
+  max-width: 580px;
+}
+
+/* Page number — hidden */
+
+/* Hero */
+.hero { padding: 0; }
+.badge {
+  display: inline-block; font-size: 11px; font-weight: 600;
+  color: var(--accent); border: 1px solid var(--accent);
+  padding: 5px 16px; margin-bottom: 20px;
+  letter-spacing: 2px; text-transform: uppercase;
+}
+.hero h1 {
+  font-family: 'Libre Baskerville', Georgia, serif;
+  font-size: 36px; font-weight: 700; line-height: 1.25; margin-bottom: 16px;
+}
+.hero h1 em { font-style: italic; color: var(--accent); }
+.hero__desc { font-size: 17px; color: #666; line-height: 1.7; }
+.hero__meta { font-size: 13px; color: #999; margin-top: 16px; letter-spacing: 1px; }
+
+/* Section heading */
+.section-heading {
+  font-family: 'Libre Baskerville', Georgia, serif;
+  font-size: 28px; font-weight: 700; line-height: 1.3;
+  padding: 0 0 20px;
+}
+.section-heading em { font-style: italic; color: var(--accent); }
+
+/* Highlight block */
+.highlight { background: #f5f5f5; padding: 18px 22px; margin: 20px 0; font-size: 15px; line-height: 1.75; color: #444; }
+
+/* Sub heading */
+.sub-heading {
+  font-family: 'Libre Baskerville', Georgia, serif;
+  font-size: 20px; font-weight: 700; padding: 24px 0 10px;
+}
+
+/* Text */
+.text { font-size: 16px; color: #444; line-height: 1.75; margin-bottom: 14px; }
+
+/* List */
+.guide-list { list-style: none; margin: 12px 0 20px; }
+.guide-list li {
+  font-size: 15px; line-height: 1.7; color: #444;
+  padding: 6px 0 6px 18px; position: relative;
+  border-bottom: 1px solid #f0f0f0;
+}
+.guide-list li:last-child { border-bottom: none; }
+.guide-list li::before {
+  content: ''; position: absolute; left: 0; top: 14px;
+  width: 5px; height: 5px; border-radius: 50%; background: var(--accent);
+}
+.guide-list li strong { color: #1a1a1a; }
+
+/* Scenario card */
+.scenario-card { border: 1px solid #e8e8e8; padding: 24px; margin: 18px 0; background: #f9f9f9; }
+.scenario-card__num {
+  font-family: 'Libre Baskerville', Georgia, serif;
+  font-style: italic; font-size: 13px;
+  color: var(--accent); letter-spacing: 1px; margin-bottom: 6px;
+}
+.scenario-card__title {
+  font-family: 'Libre Baskerville', Georgia, serif;
+  font-size: 18px; font-weight: 700; line-height: 1.4; margin-bottom: 16px;
+}
+.scenario-card__point { margin-bottom: 12px; }
+.scenario-card__point-label { font-weight: 600; font-size: 15px; color: #1a1a1a; }
+.scenario-card__point-text { font-size: 14px; color: #666; line-height: 1.7; }
+.scenario-card__tip {
+  background: #f0f0f0; padding: 12px 16px; margin-top: 14px;
+  font-size: 13px; color: #555; line-height: 1.65;
+}
+.scenario-card__tip strong { color: var(--accent); }
+
+/* Footer note */
+.footer-note {
+  font-family: 'Libre Baskerville', Georgia, serif;
+  font-size: 17px; font-style: italic; color: #444;
+  padding: 28px 0 0;
+}
+.footer-note em { color: var(--accent); }
+
+@media print {
+  .slide { height: 1080px; width: 1920px; page-break-after: always; }
+  body { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+}
+
+@media (max-width: 768px) {
+  .nav { padding: 16px 20px; width: 100%; }
+  .hero h1 { font-size: 26px; }
+  .section-heading { font-size: 22px; }
+  .slide__body { width: 100%; padding: 0 20px; }
+  .divider { display: none; }
+}
+</style>
+</head>
+<body>
+
+<!-- SLIDE 1: Title -->
+<div class="slide">
+<div class="divider"></div>
+<nav class="nav">
+  <a class="nav__logo" href="#"><img src="https://maiyamaiya19999-bit.github.io/maysoulme-assets/logo-ms.png" alt="MS"></a>
+  <span class="nav__logo-name">maysoulme</span>
+</nav>
+<div class="slide__body">
+  <div class="slide__inner">
+    <div class="hero">
+      <div class="badge">УРОК</div>
+      <h1>Формула вирусных <em>разговорных роликов</em></h1>
+      <p class="hero__desc">Как писать сценарии для разговорных Reels, которые удерживают, вовлекают и продают — без кринжа и шаблонов</p>
+      <p class="hero__meta">Контент &middot; Reels &middot; Сценарии</p>
+    </div>
+  </div>
+</div>
+
+</div>
+
+<!-- SLIDE 2: 01 -->
+<div class="slide">
+<div class="divider"></div>
+<nav class="nav">
+  <a class="nav__logo" href="#"><img src="https://maiyamaiya19999-bit.github.io/maysoulme-assets/logo-ms.png" alt="MS"></a>
+  <span class="nav__logo-name">maysoulme</span>
+</nav>
+<div class="slide__body">
+  <div class="slide__inner">
+    <h2 class="section-heading">Сначала формула — <em>потом ассистент</em></h2>
+    <p class="text">Нейросеть не заменяет понимание. Она ускоряет — но только если ты знаешь, что просить. Этот урок — не про промты. Он про структуру, которая делает ролик сильным.</p>
+    <div class="highlight"><strong>Важно:</strong> сначала формула в голове — потом ассистент в работе. Иначе получишь гладкий текст, который не цепляет.</div>
+  </div>
+</div>
+
+</div>
+
+<!-- SLIDE 3: 02 -->
+<div class="slide">
+<div class="divider"></div>
+<nav class="nav">
+  <a class="nav__logo" href="#"><img src="https://maiyamaiya19999-bit.github.io/maysoulme-assets/logo-ms.png" alt="MS"></a>
+  <span class="nav__logo-name">maysoulme</span>
+</nav>
+<div class="slide__body">
+  <div class="slide__inner">
+    <h2 class="section-heading">Проект в Claude + <em>3 файла</em></h2>
+    <ul class="guide-list">
+      <li><strong>Файл «Голос».</strong> Твой тон, стиль, запреты, примеры фраз.</li>
+      <li><strong>Файл «Аудитория».</strong> Кто они, что болит, чего хотят тайно.</li>
+      <li><strong>Файл «Формула».</strong> Структура ролика: хук → завязка → тело → позиция → CTA.</li>
+    </ul>
+    <div class="highlight"><strong>Результат:</strong> Claude пишет в твоём голосе, для твоих людей, по твоей структуре.</div>
+  </div>
+</div>
+
+</div>
+
+<!-- SLIDE 4: 03 -->
+<div class="slide">
+<div class="divider"></div>
+<nav class="nav">
+  <a class="nav__logo" href="#"><img src="https://maiyamaiya19999-bit.github.io/maysoulme-assets/logo-ms.png" alt="MS"></a>
+  <span class="nav__logo-name">maysoulme</span>
+</nav>
+<div class="slide__body">
+  <div class="slide__inner">
+    <h2 class="section-heading">Два разных <em>инструмента</em></h2>
+    <h3 class="sub-heading">Текстовый ролик</h3>
+    <p class="text">Текст на экране + закадровый голос или музыка. Подходит для подборок, инструкций, списков. Сценарий = текст для экрана.</p>
+    <h3 class="sub-heading">Разговорный ролик</h3>
+    <p class="text">Ты говоришь на камеру. Живая речь, эмоция, контакт глаз. Сценарий = речь, которую ты произнесёшь.</p>
+    <div class="highlight"><strong>Важно:</strong> один и тот же контент в разных форматах звучит по-разному. Нельзя просто прочитать текстовый сценарий вслух.</div>
+  </div>
+</div>
+
+</div>
+
+<!-- SLIDE 5: 04 -->
+<div class="slide">
+<div class="divider"></div>
+<nav class="nav">
+  <a class="nav__logo" href="#"><img src="https://maiyamaiya19999-bit.github.io/maysoulme-assets/logo-ms.png" alt="MS"></a>
+  <span class="nav__logo-name">maysoulme</span>
+</nav>
+<div class="slide__body">
+  <div class="slide__inner">
+    <h2 class="section-heading">Сначала сценарий — <em>никакого фритолка</em></h2>
+    <p class="text">Фритолк — это когда включаешь камеру и «просто говоришь». Результат: повторы, мычание, потеря мысли. Зритель уходит на 3-й секунде.</p>
+    <p class="text">Сценарий не убивает естественность. Он убивает хаос.</p>
+    <div class="highlight"><strong>Схема:</strong> тема → тезисы на бумаге → сценарий в Claude → читка вслух → правка → съёмка по суфлёру.</div>
+  </div>
+</div>
+
+</div>
+
+<!-- SLIDE 6: 05 -->
+<div class="slide">
+<div class="divider"></div>
+<nav class="nav">
+  <a class="nav__logo" href="#"><img src="https://maiyamaiya19999-bit.github.io/maysoulme-assets/logo-ms.png" alt="MS"></a>
+  <span class="nav__logo-name">maysoulme</span>
+</nav>
+<div class="slide__body">
+  <div class="slide__inner">
+    <h2 class="section-heading">Анатомия <em>разговорного ролика</em></h2>
+    <ul class="guide-list">
+      <li><strong>Хук (0–3 сек).</strong> Остановить палец. Удар в чувство или провокация.</li>
+      <li><strong>Завязка (3–7 сек).</strong> Узнавание: «это про меня».</li>
+      <li><strong>Тело (основная часть).</strong> Инструктаж, а не лекция. Конкретика, которую обычно продают.</li>
+      <li><strong>Личная позиция (за 5–10 сек до конца).</strong> Твоё неотфильтрованное мнение. Эмоциональный пик.</li>
+      <li><strong>CTA (последние 3–5 сек).</strong> Вшит в речь естественно, не приклеен роботом.</li>
+    </ul>
+  </div>
+</div>
+
+</div>
+
+<!-- SLIDE 7: 06 -->
+<div class="slide">
+<div class="divider"></div>
+<nav class="nav">
+  <a class="nav__logo" href="#"><img src="https://maiyamaiya19999-bit.github.io/maysoulme-assets/logo-ms.png" alt="MS"></a>
+  <span class="nav__logo-name">maysoulme</span>
+</nav>
+<div class="slide__body">
+  <div class="slide__inner">
+    <h2 class="section-heading">Хук — <em>остановить палец</em></h2>
+    <p class="text">Первые 3 секунды решают всё. Хук — не заголовок. Это эмоциональный удар, после которого невозможно пролистать.</p>
+    <p class="text">Хук бьёт в одно конкретное чувство: страх, стыд, облегчение, амбицию, возмущение.</p>
+    <div class="highlight"><strong>Важно:</strong> «Привет, сегодня поговорим о...» — это не хук. Это приглашение уйти.</div>
+  </div>
+</div>
+
+</div>
+
+<!-- SLIDE 8: 07 -->
+<div class="slide">
+<div class="divider"></div>
+<nav class="nav">
+  <a class="nav__logo" href="#"><img src="https://maiyamaiya19999-bit.github.io/maysoulme-assets/logo-ms.png" alt="MS"></a>
+  <span class="nav__logo-name">maysoulme</span>
+</nav>
+<div class="slide__body">
+  <div class="slide__inner">
+    <h2 class="section-heading">Завязка — <em>узнавание</em></h2>
+    <p class="text">Сразу после хука зритель должен подумать: «так это же про меня» или «наконец кто-то это сказал».</p>
+    <p class="text">Называй ситуацию словами, которыми её проживает сама аудитория. Не терминами, не официальным языком — а так, как люди думают про себя.</p>
+  </div>
+</div>
+
+</div>
+
+<!-- SLIDE 9: 08 -->
+<div class="slide">
+<div class="divider"></div>
+<nav class="nav">
+  <a class="nav__logo" href="#"><img src="https://maiyamaiya19999-bit.github.io/maysoulme-assets/logo-ms.png" alt="MS"></a>
+  <span class="nav__logo-name">maysoulme</span>
+</nav>
+<div class="slide__body">
+  <div class="slide__inner">
+    <h2 class="section-heading">Инструктируй, <em>а не информируй</em></h2>
+    <div class="scenario-card">
+      <div class="scenario-card__num">ГЛАВНОЕ ПРАВИЛО УРОКА</div>
+      <div class="scenario-card__title">Давай конкретику, которую обычно продают</div>
+      <div class="scenario-card__point">
+        <span class="scenario-card__point-label">&#x2717; Информирование.</span>
+        <span class="scenario-card__point-text"> «Чтобы поднять самооценку, нужно работать над собой» — вода, слышали тысячу раз.</span>
+      </div>
+      <div class="scenario-card__point">
+        <span class="scenario-card__point-label">&#x2713; Инструктаж.</span>
+        <span class="scenario-card__point-text"> «Вечером бери заметки, три колонки: мысль, что расстроила; доказательство, что правда; что неправда. 3 минуты в день — через 2 недели реагируешь иначе».</span>
+      </div>
+      <div class="scenario-card__tip"><strong>Лайфхак:</strong> отдавай это бесплатно — щедрость окупается.</div>
+    </div>
+  </div>
+</div>
+
+</div>
+
+<!-- SLIDE 10: 09 -->
+<div class="slide">
+<div class="divider"></div>
+<nav class="nav">
+  <a class="nav__logo" href="#"><img src="https://maiyamaiya19999-bit.github.io/maysoulme-assets/logo-ms.png" alt="MS"></a>
+  <span class="nav__logo-name">maysoulme</span>
+</nav>
+<div class="slide__body">
+  <div class="slide__inner">
+    <h2 class="section-heading">Почему не страшно <em>отдавать бесплатно</em></h2>
+    <p class="text">Только 1–10 человек из 1000 сделают это сами. Остальные купят — потому что видят, что ты не жадничаешь.</p>
+    <div class="highlight"><strong>Мысль зрителя:</strong> «если такое даёт бесплатно — что же на платном?»</div>
+  </div>
+</div>
+
+</div>
+
+<!-- SLIDE 11: 10 -->
+<div class="slide">
+<div class="divider"></div>
+<nav class="nav">
+  <a class="nav__logo" href="#"><img src="https://maiyamaiya19999-bit.github.io/maysoulme-assets/logo-ms.png" alt="MS"></a>
+  <span class="nav__logo-name">maysoulme</span>
+</nav>
+<div class="slide__body">
+  <div class="slide__inner">
+    <h2 class="section-heading">Личная позиция <em>и CTA</em></h2>
+    <h3 class="sub-heading">Личная позиция (за 5–10 сек до конца)</h3>
+    <p class="text">Твоё неотфильтрованное мнение или цифра. Не «у некоторых получается», а «у меня вот так». Это эмоциональный пик.</p>
+    <h3 class="sub-heading">CTA (последние 3–5 сек)</h3>
+    <ul class="guide-list">
+      <li><strong>Цель — рост.</strong> «Подпишись, чтобы не пропустить».</li>
+      <li><strong>Цель — лид-магнит.</strong> «Напиши слово в комментариях — пришлю».</li>
+    </ul>
+    <div class="highlight"><strong>Важно:</strong> CTA вшивается в речь естественно, а не приклеивается роботом.</div>
+  </div>
+</div>
+
+</div>
+
+<!-- SLIDE 12: 11 -->
+<div class="slide">
+<div class="divider"></div>
+<nav class="nav">
+  <a class="nav__logo" href="#"><img src="https://maiyamaiya19999-bit.github.io/maysoulme-assets/logo-ms.png" alt="MS"></a>
+  <span class="nav__logo-name">maysoulme</span>
+</nav>
+<div class="slide__body">
+  <div class="slide__inner">
+    <h2 class="section-heading">Хук — это <em>80% успеха ролика</em></h2>
+    <ul class="guide-list">
+      <li><strong>«Почему никто не говорит, что...»</strong> — секрет.</li>
+      <li><strong>«Не делай это, пока не узнаешь одну вещь»</strong> — страх ошибки.</li>
+      <li><strong>Конкретная цифра</strong> — «как я сделала это за 60 дней».</li>
+      <li><strong>«Все думают так. На самом деле наоборот»</strong> — разрыв шаблона.</li>
+      <li><strong>«Почему мне раньше никто не сказал...»</strong> — сожаление.</li>
+      <li><strong>«Пока ты делаешь это, другие уже...»</strong> — зависть-мотиватор.</li>
+    </ul>
+  </div>
+</div>
+
+</div>
+
+<!-- SLIDE 13: 12 -->
+<div class="slide">
+<div class="divider"></div>
+<nav class="nav">
+  <a class="nav__logo" href="#"><img src="https://maiyamaiya19999-bit.github.io/maysoulme-assets/logo-ms.png" alt="MS"></a>
+  <span class="nav__logo-name">maysoulme</span>
+</nav>
+<div class="slide__body">
+  <div class="slide__inner">
+    <h2 class="section-heading">В какое чувство <em>я целюсь?</em></h2>
+    <p class="text">Спроси себя перед каждым хуком:</p>
+    <ul class="guide-list">
+      <li><strong>Страх</strong> упустить.</li>
+      <li><strong>Стыд</strong> — «я делаю не так».</li>
+      <li><strong>Облегчение</strong> — «я не одна такая».</li>
+      <li><strong>Амбиция</strong> — «я тоже так хочу».</li>
+      <li><strong>Возмущение</strong> — «наконец кто-то это сказал».</li>
+    </ul>
+    <div class="highlight"><strong>Важно:</strong> хук, попавший в чувство, всегда сильнее хука, который просто сообщает тему.</div>
+  </div>
+</div>
+
+</div>
+
+<!-- SLIDE 14: 13 -->
+<div class="slide">
+<div class="divider"></div>
+<nav class="nav">
+  <a class="nav__logo" href="#"><img src="https://maiyamaiya19999-bit.github.io/maysoulme-assets/logo-ms.png" alt="MS"></a>
+  <span class="nav__logo-name">maysoulme</span>
+</nav>
+<div class="slide__body">
+  <div class="slide__inner">
+    <h2 class="section-heading">Два слоя <em>боли</em></h2>
+    <h3 class="sub-heading">Озвученные боли</h3>
+    <p class="text">То, что говорят вслух. Поверхность. Легко найти — посмотри вопросы в нише.</p>
+    <h3 class="sub-heading">Тайные желания</h3>
+    <p class="text">То, что не говорят вслух. Самый мощный слой — именно он жмёт на «подписаться»: признание, лидерство в теме, доказать свою ценность, независимость, свобода, короткий путь.</p>
+  </div>
+</div>
+
+</div>
+
+<!-- SLIDE 15: 14 -->
+<div class="slide">
+<div class="divider"></div>
+<nav class="nav">
+  <a class="nav__logo" href="#"><img src="https://maiyamaiya19999-bit.github.io/maysoulme-assets/logo-ms.png" alt="MS"></a>
+  <span class="nav__logo-name">maysoulme</span>
+</nav>
+<div class="slide__body">
+  <div class="slide__inner">
+    <h2 class="section-heading">Как это собирается <em>вместе</em></h2>
+    <ul class="guide-list">
+      <li>Берёшь озвученную боль.</li>
+      <li>Копаешь под ней тайное желание.</li>
+      <li>Целишься хуком в желание.</li>
+      <li>Телом ролика закрываешь боль.</li>
+    </ul>
+    <div class="highlight"><strong>Вот почему</strong> ролики залетают.</div>
+  </div>
+</div>
+
+</div>
+
+<!-- SLIDE 16: 15 -->
+<div class="slide">
+<div class="divider"></div>
+<nav class="nav">
+  <a class="nav__logo" href="#"><img src="https://maiyamaiya19999-bit.github.io/maysoulme-assets/logo-ms.png" alt="MS"></a>
+  <span class="nav__logo-name">maysoulme</span>
+</nav>
+<div class="slide__body">
+  <div class="slide__inner">
+    <h2 class="section-heading">Структуру копируют. <em>Голос — нет</em></h2>
+    <ul class="guide-list">
+      <li><strong>Никакого стаккато.</strong> Текучая речь с нарастанием, как будто рассказываешь подруге.</li>
+      <li><strong>Анафора и ритм.</strong> «Это не про деньги. Это не про удачу. Это про то, что ты перестала ждать разрешения».</li>
+      <li><strong>Юмор тонкий.</strong> Ирония, гипербола с деталью, обманутое ожидание.</li>
+      <li><strong>Сильное закрытие.</strong> Эмоциональный климакс, не «ну вот как-то так».</li>
+    </ul>
+  </div>
+</div>
+
+</div>
+
+<!-- SLIDE 17: 16 -->
+<div class="slide">
+<div class="divider"></div>
+<nav class="nav">
+  <a class="nav__logo" href="#"><img src="https://maiyamaiya19999-bit.github.io/maysoulme-assets/logo-ms.png" alt="MS"></a>
+  <span class="nav__logo-name">maysoulme</span>
+</nav>
+<div class="slide__body">
+  <div class="slide__inner">
+    <h2 class="section-heading">5 рычагов <em>репоста и подписки</em></h2>
+    <ul class="guide-list">
+      <li><strong>«Это про меня»</strong> — узнавание.</li>
+      <li><strong>«Наконец кто-то это сказал»</strong> — артикуляция.</li>
+      <li><strong>«Я тоже так хочу»</strong> — аспирация.</li>
+      <li><strong>«Я знаю таких людей»</strong> — хочется переслать.</li>
+      <li><strong>«Надо сохранить»</strong> — практическая ценность.</li>
+    </ul>
+    <div class="highlight"><strong>Важно:</strong> в сильном ролике должны сработать минимум два триггера.</div>
+  </div>
+</div>
+
+</div>
+
+<!-- SLIDE 18: 17 -->
+<div class="slide">
+<div class="divider"></div>
+<nav class="nav">
+  <a class="nav__logo" href="#"><img src="https://maiyamaiya19999-bit.github.io/maysoulme-assets/logo-ms.png" alt="MS"></a>
+  <span class="nav__logo-name">maysoulme</span>
+</nav>
+<div class="slide__body">
+  <div class="slide__inner">
+    <h2 class="section-heading">Тренд 2026 — <em>простота и домашность</em></h2>
+    <ul class="guide-list">
+      <li><strong>Говоришь и что-то делаешь.</strong> Красишь губы, готовишь. Движение = досмотр выше.</li>
+      <li><strong>Читаешь по суфлёру в объектив.</strong> Самый простой формат, выглядит как уверенный разговор.</li>
+      <li><strong>Говорящая голова на фоне.</strong> Голова внизу, сверху фото/видео (CapCut → «Наложение»).</li>
+    </ul>
+    <div class="highlight"><strong>Важно:</strong> достойный свет, одежда, фон — это условие, а не опция.</div>
+  </div>
+</div>
+
+</div>
+
+<!-- SLIDE 19: 18 -->
+<div class="slide">
+<div class="divider"></div>
+<nav class="nav">
+  <a class="nav__logo" href="#"><img src="https://maiyamaiya19999-bit.github.io/maysoulme-assets/logo-ms.png" alt="MS"></a>
+  <span class="nav__logo-name">maysoulme</span>
+</nav>
+<div class="slide__body">
+  <div class="slide__inner">
+    <h2 class="section-heading">Чек-лист <em>перед съёмкой</em></h2>
+    <ul class="guide-list">
+      <li>Сценарий написан до съёмки.</li>
+      <li>Хук бьёт в конкретное чувство.</li>
+      <li>В первые 3 секунды слышна боль.</li>
+      <li>Тело инструктирует, а не информирует.</li>
+      <li>Речь течёт — нет стаккато.</li>
+      <li>Есть ритм или анафора.</li>
+      <li>Юмор тонкий.</li>
+      <li>Сработали минимум 2 триггера.</li>
+      <li>Закрытие — эмоциональный пик.</li>
+      <li>CTA вшит в речь естественно.</li>
+      <li>Звучит как ты, а не нейросеть.</li>
+      <li>Картинка достойная.</li>
+    </ul>
+  </div>
+</div>
+
+</div>
+
+<!-- SLIDE 20: 19 -->
+<div class="slide">
+<div class="divider"></div>
+<nav class="nav">
+  <a class="nav__logo" href="#"><img src="https://maiyamaiya19999-bit.github.io/maysoulme-assets/logo-ms.png" alt="MS"></a>
+  <span class="nav__logo-name">maysoulme</span>
+</nav>
+<div class="slide__body">
+  <div class="slide__inner">
+    <h2 class="section-heading">10 ошибок, <em>которые убивают ролики</em></h2>
+    <ul class="guide-list">
+      <li>Фритолк без сценария.</li>
+      <li>Информирование вместо инструктажа.</li>
+      <li>Слабый хук.</li>
+      <li>Стаккато-речь.</li>
+      <li>Плоская шутка.</li>
+      <li>Лекторский тон.</li>
+      <li>Затухающий финал.</li>
+      <li>Чужой голос.</li>
+      <li>CTA приклеен роботом.</li>
+      <li>Плохая картинка.</li>
+    </ul>
+  </div>
+</div>
+
+</div>
+
+<!-- SLIDE 21: 20 (Closing) -->
+<div class="slide">
+<div class="divider"></div>
+<nav class="nav">
+  <a class="nav__logo" href="#"><img src="https://maiyamaiya19999-bit.github.io/maysoulme-assets/logo-ms.png" alt="MS"></a>
+  <span class="nav__logo-name">maysoulme</span>
+</nav>
+<div class="slide__body">
+  <div class="slide__inner">
+    <h2 class="section-heading">Собираем всё <em>в одну формулу</em></h2>
+    <p class="text">Сильный хук в чувство → узнавание «это про меня» → ритмичные тезисы, которые инструктируют → личная неотфильтрованная позиция → тёплое или провокационное закрытие.</p>
+    <p class="footer-note">И всё это — живой текучей речью, своим голосом, <em>по суфлёру.</em></p>
+  </div>
+</div>
+
+</div>
+
+</body>
+</html>
